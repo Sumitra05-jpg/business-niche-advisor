@@ -15,6 +15,18 @@
     </form>
 
     {% if prediction %}
+ <!-- Show the Pie Chart -->
+{% if pie_base64 %}
+<h2>Population vs Income (Pie Chart)</h2>
+<img src="data:image/png;base64,{{ pie_base64 }}" alt="Pie Chart">
+{% endif %}
+
+<!-- Show the Bar Chart -->
+{% if bar_base64 %}
+<h2>Population vs Income (Bar Graph)</h2>
+<img src="data:image/png;base64,{{ bar_base64 }}" alt="Bar Graph">
+{% endif %}
+
     <h3>Suggested Business Type: {{ prediction }}</h3>
     {% endif %}
 </body>
