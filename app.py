@@ -19,44 +19,19 @@ def home():
 
         pred = model.predict([[population, income]])[0]
         mapping = {0: "Modern Business", 1: "Agriculture", 2: "Service Sector"}
+
+        # (Pie + Bar chart banaune sabai code)
+
         prediction = mapping.get(pred, "Unknown")
 
-                # Create a pie chart
-        labels = ['Population', 'Income']
-        sizes = [population, income]
-        colors = ['#ff9999', '#66b3ff']
-        fig1, ax1 = plt.subplots()
-        ax1.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
-        ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    
+  return render_template(
+    "index.html",
+    prediction=prediction,
+    pie_base64=pie_base64,
+    bar_base64=bar_base64
+)
 
-        # Save pie chart to buffer
-        pie_buf = io.BytesIO()
-        plt.savefig(pie_buf, format='png')
-        pie_buf.seek(0)
-        pie_base64 = base64.b64encode(pie_buf.getvalue()).decode('utf-8')
-        plt.close()
-
-        # Create a bar graph
-        fig2, ax2 = plt.subplots()
-        ax2.bar(labels, sizes, color=colors)
-        ax2.set_ylabel('Values')
-        ax2.set_title('Population vs Income')
-
-        # Save bar chart to buffer
-        bar_buf = io.BytesIO()
-        plt.savefig(bar_buf, format='png')
-        bar_buf.seek(0)
-        bar_base64 = base64.b64encode(bar_buf.getvalue()).decode('utf-8')
-        plt.close()
-        prediction = mapping.get(pred, "Unknown")
-
-# (Your pie chart and bar chart code)
-
-prediction = mapping.get(pred, "Unknown")
-
-# (Your pie chart and bar chart code)
-
-return render_template("index.html", prediction=prediction, pie_base64=pie_base64, bar_base64=bar_base64)
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
